@@ -70,7 +70,7 @@
 
   <script>
     const curriculum = [
-      { title: "CBC", courses: [
+      { title: "Primer Semestre", courses: [
         "Orientación Institucional",
         "Educación Física",
         "Int a la Filosofía",
@@ -81,23 +81,63 @@
         "Int A Las Ciencias Sociales"
       ]},
       { title: "Segundo Semestre", courses: [
-        { name: "Biología Básica" },
-        { name: "Física Básica" },
-        { name: "Fund de Hist Social Dominicana" },
+        "Biología Básica",
+        "Física Básica",
+        "Fund de Hist Social Dominicana",
         { name: "Inglés Elemental II", prereq: ["Inglés Elemental I"] },
         { name: "Francés Elemental II", prereq: ["Francés Elemental I"] },
         { name: "Lengua Española Básica II", prereq: ["Lengua Española Básica I"] }
       ]},
       { title: "Tercer Semestre", courses: [
-        { name: "Historia De La Cultura Univers" },
+        "Historia De La Cultura Univers",
         { name: "Inglés Intermedio I", prereq: ["Inglés Elemental II"] },
         { name: "Francés Intermedio I", prereq: ["Francés Elemental II"] },
         { name: "Lengua Española III", prereq: ["Lengua Española Básica II"] },
-        { name: "Int A La Lingüística General" },
-        { name: "Matemática Básica" },
-        { name: "Química Básica" }
+        "Int A La Lingüística General",
+        "Matemática Básica",
+        "Química Básica"
       ]},
-      // Agrega los siguientes semestres siguiendo el mismo patrón...
+      { title: "Cuarto Semestre", courses: [
+        "His De La Cultura Dom I",
+        { name: "Inglés Intermedio II", prereq: ["Inglés Intermedio I"] },
+        { name: "Francés Intermedio II", prereq: ["Francés Intermedio I"] },
+        "Morfología Y Sintaxis I",
+        "Int A La Educación",
+        "Int A La Psicología"
+      ]},
+      { title: "Quinto Semestre", courses: [
+        "Metodología De La Inv Cientif",
+        "Gramática Inglesa",
+        { name: "Inglés Intermedio III", prereq: ["Inglés Intermedio II"] },
+        "Fonética Y Fonología",
+        "Literatura Dominicana I",
+        "His De La Lengua Española I"
+      ]},
+      { title: "Sexto Semestre", courses: [
+        { name: "Inglés Avanzado I", prereq: ["Inglés Intermedio III"] },
+        "Composición Inglesa I",
+        "Fonética Inglesa",
+        "Civiliz Norteam E Inglesa",
+        "Adquisición De Una Leng Extran"
+      ]},
+      { title: "Séptimo Semestre", courses: [
+        "Estilística Inglesa",
+        "Int Lit Paises Angloparlantes",
+        { name: "Inglés Avanzado II", prereq: ["Inglés Avanzado I"] },
+        "Met De La Enseñanza Del Inglés"
+      ]},
+      { title: "Octavo Semestre", courses: [
+        "Literatura Inglesa Siglo XX",
+        { name: "Inglés Avanzado III", prereq: ["Inglés Avanzado II"] },
+        "Historia Del Idioma Inglés",
+        "Lit Norteamericana Siglo XX",
+        "Seminario De Tesis En Inglés",
+        "Asignatura Optativa de Idiomas",
+        "Optativa de Otro Departamento"
+      ]},
+      { title: "Tesis de Grado", courses: [
+        "Tesis De Grado O Curso Equival"
+      ]}
     ];
 
     const grid = document.getElementById('grid');
@@ -107,7 +147,6 @@
       grid.innerHTML = '';
 
       const allCompleted = new Set(completed);
-      const nameToElem = {};
 
       curriculum.forEach(semester => {
         const container = document.createElement('div');
@@ -140,7 +179,6 @@
               div.classList.add('completed');
             }
           }
-          nameToElem[courseName] = div;
           container.appendChild(div);
         });
 
