@@ -7,15 +7,15 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #eef2f7, #ffffff);
+      background-color: #111;
       margin: 0;
       padding: 20px;
-      color: #2c3e50;
+      color: #fff;
     }
 
     h1 {
       text-align: center;
-      color: #1a2e45;
+      color: #fff;
       font-size: 2.2em;
       margin-bottom: 30px;
     }
@@ -27,10 +27,10 @@
     }
 
     .semester {
-      background-color: #ffffff;
-      border-radius: 16px;
+      background-color: #000;
+      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
       transition: transform 0.2s;
     }
 
@@ -40,15 +40,15 @@
 
     .semester h3 {
       margin-top: 0;
-      color: #34495e;
+      color: #fff;
       font-size: 1.2em;
-      border-bottom: 2px solid #e0e0e0;
+      border-bottom: 2px solid #444;
       padding-bottom: 8px;
       margin-bottom: 15px;
     }
 
     .course {
-      background: #e9f1f7;
+      background: #b71c1c;
       margin: 10px 0;
       padding: 10px 14px;
       border-radius: 10px;
@@ -56,21 +56,22 @@
       transition: background 0.3s, color 0.3s;
       position: relative;
       font-size: 0.95em;
+      color: white;
     }
 
     .course:hover {
-      background: #d3e6f2;
+      background: #c62828;
     }
 
     .course.completed {
-      background: #c8e6c9;
-      color: #2e7d32;
+      background: #2e7d32;
+      color: white;
       text-decoration: line-through;
     }
 
     .course.locked {
-      background: #f0f0f0;
-      color: #b0b0b0;
+      background: #444;
+      color: #bbb;
       cursor: not-allowed;
     }
 
@@ -79,13 +80,13 @@
       position: absolute;
       bottom: 100%;
       left: 0;
-      background: #2c3e50;
+      background: #222;
       color: white;
       padding: 6px 10px;
       border-radius: 6px;
       white-space: nowrap;
       font-size: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
       z-index: 10;
     }
 
