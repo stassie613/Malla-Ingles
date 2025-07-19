@@ -3,97 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malla Curricular Lenguas Modernas Inglés (UASD)</title>
+  <title>Malla Curricular - Lenguas Modernas (Inglés)</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #111;
       margin: 0;
-      padding: 20px;
-      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: white;
     }
-
     h1 {
       text-align: center;
-      color: #fff;
-      font-size: 2.2em;
-      margin-bottom: 30px;
+      margin: 20px 0;
     }
-
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 20px;
-    }
-
-    .semester {
-      background-color: #000;
-      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s;
     }
-
-    .semester:hover {
-      transform: translateY(-4px);
-    }
-
-    .semester h3 {
-      margin-top: 0;
-      color: #fff;
-      font-size: 1.2em;
-      border-bottom: 2px solid #444;
-      padding-bottom: 8px;
-      margin-bottom: 15px;
-    }
-
-    .course {
-      background: #b71c1c;
-      margin: 10px 0;
-      padding: 10px 14px;
+    .semester {
+      background: black;
+      padding: 15px;
       border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      min-width: 220px;
+      max-width: 250px;
+    }
+    .semester h2 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: white;
+      border-bottom: 1px solid white;
+      padding-bottom: 5px;
+    }
+    .course {
+      background-color: #c0392b; /* rojo */
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 8px;
       cursor: pointer;
-      transition: background 0.3s, color 0.3s;
+      transition: background-color 0.3s;
       position: relative;
-      font-size: 0.95em;
-      color: white;
     }
-
     .course:hover {
-      background: #c62828;
+      background-color: #e74c3c;
     }
-
-    .course.completed {
-      background: #2e7d32;
-      color: white;
+    .course.approved {
+      background-color: #27ae60 !important; /* verde */
       text-decoration: line-through;
     }
-
     .course.locked {
-      background: #444;
-      color: #bbb;
+      background-color: #555 !important;
       cursor: not-allowed;
     }
-
-    .course[title]:hover::after {
-      content: attr(title);
+    .tooltip {
+      visibility: hidden;
+      width: 200px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 5px;
+      border-radius: 5px;
       position: absolute;
-      bottom: 100%;
-      left: 0;
-      background: #222;
-      color: white;
-      padding: 6px 10px;
-      border-radius: 6px;
-      white-space: nowrap;
-      font-size: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-      z-index: 10;
+      z-index: 1;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
-
-    @media (max-width: 600px) {
-      .course {
-        font-size: 0.9em;
-      }
+    .course.locked:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
     }
   </style>
 </head>
@@ -102,121 +85,149 @@
   <div class="grid" id="grid"></div>
 
   <script>
-    const curriculum = [
-      { title: "Primer Semestre", courses: [
-        { name: "Orientación Institucional" },
-        { name: "Educación Física" },
-        { name: "Int a la Filosofía" },
-        { name: "Técnica De Investigación Y Est." },
-        { name: "Inglés Elemental I" },
-        { name: "Francés Elemental I" },
-        { name: "Lengua Española Básica I" },
-        { name: "Int A Las Ciencias Sociales" }
-      ]},
-      { title: "Segundo Semestre", courses: [
-        { name: "Biología Básica" },
-        { name: "Física Básica" },
-        { name: "Fund de Hist Social Dominicana" },
-        { name: "Inglés Elemental II", prereq: ["Inglés Elemental I"] },
-        { name: "Francés Elemental II", prereq: ["Francés Elemental I"] },
-        { name: "Lengua Española Básica II", prereq: ["Lengua Española Básica I"] }
-      ]},
-      { title: "Tercer Semestre", courses: [
-        { name: "Historia De La Cultura Univers" },
-        { name: "Inglés Intermedio I", prereq: ["Inglés Elemental II"] },
-        { name: "Francés Intermedio I", prereq: ["Francés Elemental II"] },
-        { name: "Lengua Española III", prereq: ["Lengua Española Básica II"] },
-        { name: "Int A La Lingüística General" },
-        { name: "Matemática Básica" },
-        { name: "Química Básica" }
-      ]},
-      { title: "Cuarto Semestre", courses: [
-        { name: "His De La Cultura Dom I" },
-        { name: "Inglés Intermedio II", prereq: ["Inglés Intermedio I"] },
-        { name: "Francés Intermedio II", prereq: ["Francés Intermedio I"] },
-        { name: "Morfología Y Sintaxis I" },
-        { name: "Int A La Educación" },
-        { name: "Int A La Psicología" }
-      ]},
-      { title: "Quinto Semestre", courses: [
-        { name: "Metodología De La Inv Cientif" },
-        { name: "Gramática Inglesa" },
-        { name: "Inglés Intermedio III", prereq: ["Inglés Intermedio II"] },
-        { name: "Fonética Y Fonología" },
-        { name: "Literatura Dominicana I" },
-        { name: "His De La Lengua Española I" }
-      ]},
-      { title: "Sexto Semestre", courses: [
-        { name: "Inglés Avanzado I", prereq: ["Inglés Intermedio III"] },
-        { name: "Composición Inglesa I" },
-        { name: "Fonética Inglesa" },
-        { name: "Civiliz Norteam E Inglesa" },
-        { name: "Adquisición De Una Leng Extran" }
-      ]},
-      { title: "Séptimo Semestre", courses: [
-        { name: "Estilística Inglesa" },
-        { name: "Int Lit Paises Angloparlantes" },
-        { name: "Inglés Avanzado II", prereq: ["Inglés Avanzado I"] },
-        { name: "Met De La Enseñanza Del Inglés" }
-      ]},
-      { title: "Octavo Semestre", courses: [
-        { name: "Literatura Inglesa Siglo XX" },
-        { name: "Inglés Avanzado III", prereq: ["Inglés Avanzado II"] },
-        { name: "Historia Del Idioma Inglés" },
-        { name: "Lit Norteamericana Siglo XX" },
-        { name: "Seminario De Tesis En Inglés" },
-        { name: "Asignatura Optativa de Idiomas" },
-        { name: "Optativa de Otro Departamento" }
-      ]},
-      { title: "Tesis de Grado", courses: [
-        { name: "Tesis De Grado O Curso Equival" }
-      ]}
+    const semesters = [
+      {
+        name: "Primer Semestre",
+        courses: [
+          "Orientación Institucional",
+          "Educación Física",
+          "Int a la Filosofía",
+          "Técnica De Investigación Y Est.",
+          "Inglés Elemental I",
+          "Francés Elemental I",
+          "Lengua Española Básica I",
+          "Int A Las Ciencias Sociales"
+        ]
+      },
+      {
+        name: "Segundo Semestre",
+        courses: [
+          "Biología Básica",
+          "Física Básica",
+          "Fund de Hist Social Dominicana",
+          { name: "Inglés Elemental II", prereq: ["Inglés Elemental I"] },
+          { name: "Francés Elemental II", prereq: ["Francés Elemental I"] },
+          { name: "Lengua Española Básica II", prereq: ["Lengua Española Básica I"] }
+        ]
+      },
+      {
+        name: "Tercer Semestre",
+        courses: [
+          "Historia De La Cultura Univers",
+          { name: "Inglés Intermedio I", prereq: ["Inglés Elemental II"] },
+          { name: "Francés Intermedio I", prereq: ["Francés Elemental II"] },
+          { name: "Lengua Española III", prereq: ["Lengua Española Básica II"] },
+          "Int A La Lingüística General",
+          "Matemática Básica",
+          "Química Básica"
+        ]
+      },
+      {
+        name: "Cuarto Semestre",
+        courses: [
+          "His De La Cultura Dom I",
+          { name: "Inglés Intermedio II", prereq: ["Inglés Intermedio I"] },
+          { name: "Francés Intermedio II", prereq: ["Francés Intermedio I"] },
+          "Morfología Y Sintaxis I",
+          "Int A La Educación",
+          "Int A La Psicología"
+        ]
+      },
+      {
+        name: "Quinto Semestre",
+        courses: [
+          "Metodología De La Inv Cientif",
+          "Gramática Inglesa",
+          { name: "Inglés Intermedio III", prereq: ["Inglés Intermedio II"] },
+          "Fonética Y Fonología",
+          "Literatura Dominicana I",
+          "His De La Lengua Española I"
+        ]
+      },
+      {
+        name: "Sexto Semestre",
+        courses: [
+          { name: "Inglés Avanzado I", prereq: ["Inglés Intermedio III"] },
+          "Composición Inglesa I",
+          "Fonética Inglesa",
+          "Civiliz Norteam E Inglesa",
+          "Adquisición De Una Leng Extran"
+        ]
+      },
+      {
+        name: "Séptimo Semestre",
+        courses: [
+          "Estilística Inglesa",
+          "Int Lit Paises Angloparlantes",
+          { name: "Inglés Avanzado II", prereq: ["Inglés Avanzado I"] },
+          "Met De La Enseñanza Del Inglés"
+        ]
+      },
+      {
+        name: "Octavo Semestre",
+        courses: [
+          "Literatura Inglesa Siglo XX",
+          { name: "Inglés Avanzado III", prereq: ["Inglés Avanzado II"] },
+          "Historia Del Idioma Inglés",
+          "Lit Norteamericana Siglo XX",
+          "Seminario De Tesis En Inglés",
+          "Asignatura Optativa de Idiomas",
+          "Optativa de Otro Departamento"
+        ]
+      },
+      {
+        name: "Tesis de Grado",
+        courses: [
+          "Tesis De Grado O Curso Equival"
+        ]
+      }
     ];
 
-    const grid = document.getElementById('grid');
-    const completed = JSON.parse(localStorage.getItem('approvedCourses') || '[]');
+    const approved = JSON.parse(localStorage.getItem("approvedCourses") || "[]");
 
     function render() {
-      grid.innerHTML = '';
-      const allCompleted = new Set(completed);
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
 
-      curriculum.forEach(semester => {
-        const container = document.createElement('div');
-        container.className = 'semester';
-        const h3 = document.createElement('h3');
-        h3.textContent = semester.title;
-        container.appendChild(h3);
+      semesters.forEach(semester => {
+        const semDiv = document.createElement("div");
+        semDiv.className = "semester";
+
+        const title = document.createElement("h2");
+        title.textContent = semester.name;
+        semDiv.appendChild(title);
 
         semester.courses.forEach(course => {
-          const courseName = course.name;
+          const courseName = typeof course === 'string' ? course : course.name;
           const prereqs = course.prereq || [];
-          const locked = prereqs.some(p => !allCompleted.has(p));
-          const div = document.createElement('div');
-          div.className = 'course';
+          const isLocked = prereqs.some(p => !approved.includes(p));
+
+          const div = document.createElement("div");
+          div.className = "course";
+          if (approved.includes(courseName)) div.classList.add("approved");
+          else if (isLocked) div.classList.add("locked");
+
           div.textContent = courseName;
 
-          if (locked) {
-            div.classList.add('locked');
-            div.title = 'Requiere: ' + prereqs.filter(p => !allCompleted.has(p)).join(', ');
+          if (isLocked) {
+            const tooltip = document.createElement("div");
+            tooltip.className = "tooltip";
+            tooltip.textContent = `Falta: ${prereqs.filter(p => !approved.includes(p)).join(", ")}`;
+            div.appendChild(tooltip);
           } else {
-            div.addEventListener('click', () => {
-              if (allCompleted.has(courseName)) {
-                allCompleted.delete(courseName);
-              } else {
-                allCompleted.add(courseName);
-              }
-              localStorage.setItem('approvedCourses', JSON.stringify(Array.from(allCompleted)));
+            div.addEventListener("click", () => {
+              const index = approved.indexOf(courseName);
+              if (index > -1) approved.splice(index, 1);
+              else approved.push(courseName);
+              localStorage.setItem("approvedCourses", JSON.stringify(approved));
               render();
             });
-            if (allCompleted.has(courseName)) {
-              div.classList.add('completed');
-            }
           }
 
-          container.appendChild(div);
+          semDiv.appendChild(div);
         });
 
-        grid.appendChild(container);
+        grid.appendChild(semDiv);
       });
     }
 
