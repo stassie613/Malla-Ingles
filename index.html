@@ -6,61 +6,93 @@
   <title>Malla Curricular Lenguas Modernas Inglés (UASD)</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f8fb;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #eef2f7, #ffffff);
       margin: 0;
       padding: 20px;
-      color: #333;
+      color: #2c3e50;
     }
+
     h1 {
       text-align: center;
-      color: #2a4d69;
+      color: #1a2e45;
+      font-size: 2.2em;
+      margin-bottom: 30px;
     }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
     }
+
     .semester {
       background-color: #ffffff;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s;
     }
+
+    .semester:hover {
+      transform: translateY(-4px);
+    }
+
     .semester h3 {
       margin-top: 0;
-      color: #4a6274;
+      color: #34495e;
+      font-size: 1.2em;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 8px;
+      margin-bottom: 15px;
     }
+
     .course {
-      background: #e3eff8;
-      margin: 8px 0;
-      padding: 8px 12px;
-      border-radius: 8px;
+      background: #e9f1f7;
+      margin: 10px 0;
+      padding: 10px 14px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, color 0.3s;
       position: relative;
+      font-size: 0.95em;
     }
+
+    .course:hover {
+      background: #d3e6f2;
+    }
+
     .course.completed {
       background: #c8e6c9;
+      color: #2e7d32;
       text-decoration: line-through;
     }
+
     .course.locked {
       background: #f0f0f0;
-      color: #aaa;
+      color: #b0b0b0;
       cursor: not-allowed;
     }
+
     .course[title]:hover::after {
       content: attr(title);
       position: absolute;
       bottom: 100%;
       left: 0;
-      background: #444;
+      background: #2c3e50;
       color: white;
-      padding: 6px;
-      border-radius: 4px;
+      padding: 6px 10px;
+      border-radius: 6px;
       white-space: nowrap;
       font-size: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    @media (max-width: 600px) {
+      .course {
+        font-size: 0.9em;
+      }
     }
   </style>
 </head>
@@ -71,72 +103,72 @@
   <script>
     const curriculum = [
       { title: "Primer Semestre", courses: [
-        "Orientación Institucional",
-        "Educación Física",
-        "Int a la Filosofía",
-        "Técnica De Investigación Y Est.",
-        "Inglés Elemental I",
-        "Francés Elemental I",
-        "Lengua Española Básica I",
-        "Int A Las Ciencias Sociales"
+        { name: "Orientación Institucional" },
+        { name: "Educación Física" },
+        { name: "Int a la Filosofía" },
+        { name: "Técnica De Investigación Y Est." },
+        { name: "Inglés Elemental I" },
+        { name: "Francés Elemental I" },
+        { name: "Lengua Española Básica I" },
+        { name: "Int A Las Ciencias Sociales" }
       ]},
       { title: "Segundo Semestre", courses: [
-        "Biología Básica",
-        "Física Básica",
-        "Fund de Hist Social Dominicana",
+        { name: "Biología Básica" },
+        { name: "Física Básica" },
+        { name: "Fund de Hist Social Dominicana" },
         { name: "Inglés Elemental II", prereq: ["Inglés Elemental I"] },
         { name: "Francés Elemental II", prereq: ["Francés Elemental I"] },
         { name: "Lengua Española Básica II", prereq: ["Lengua Española Básica I"] }
       ]},
       { title: "Tercer Semestre", courses: [
-        "Historia De La Cultura Univers",
+        { name: "Historia De La Cultura Univers" },
         { name: "Inglés Intermedio I", prereq: ["Inglés Elemental II"] },
         { name: "Francés Intermedio I", prereq: ["Francés Elemental II"] },
         { name: "Lengua Española III", prereq: ["Lengua Española Básica II"] },
-        "Int A La Lingüística General",
-        "Matemática Básica",
-        "Química Básica"
+        { name: "Int A La Lingüística General" },
+        { name: "Matemática Básica" },
+        { name: "Química Básica" }
       ]},
       { title: "Cuarto Semestre", courses: [
-        "His De La Cultura Dom I",
+        { name: "His De La Cultura Dom I" },
         { name: "Inglés Intermedio II", prereq: ["Inglés Intermedio I"] },
         { name: "Francés Intermedio II", prereq: ["Francés Intermedio I"] },
-        "Morfología Y Sintaxis I",
-        "Int A La Educación",
-        "Int A La Psicología"
+        { name: "Morfología Y Sintaxis I" },
+        { name: "Int A La Educación" },
+        { name: "Int A La Psicología" }
       ]},
       { title: "Quinto Semestre", courses: [
-        "Metodología De La Inv Cientif",
-        "Gramática Inglesa",
+        { name: "Metodología De La Inv Cientif" },
+        { name: "Gramática Inglesa" },
         { name: "Inglés Intermedio III", prereq: ["Inglés Intermedio II"] },
-        "Fonética Y Fonología",
-        "Literatura Dominicana I",
-        "His De La Lengua Española I"
+        { name: "Fonética Y Fonología" },
+        { name: "Literatura Dominicana I" },
+        { name: "His De La Lengua Española I" }
       ]},
       { title: "Sexto Semestre", courses: [
         { name: "Inglés Avanzado I", prereq: ["Inglés Intermedio III"] },
-        "Composición Inglesa I",
-        "Fonética Inglesa",
-        "Civiliz Norteam E Inglesa",
-        "Adquisición De Una Leng Extran"
+        { name: "Composición Inglesa I" },
+        { name: "Fonética Inglesa" },
+        { name: "Civiliz Norteam E Inglesa" },
+        { name: "Adquisición De Una Leng Extran" }
       ]},
       { title: "Séptimo Semestre", courses: [
-        "Estilística Inglesa",
-        "Int Lit Paises Angloparlantes",
+        { name: "Estilística Inglesa" },
+        { name: "Int Lit Paises Angloparlantes" },
         { name: "Inglés Avanzado II", prereq: ["Inglés Avanzado I"] },
-        "Met De La Enseñanza Del Inglés"
+        { name: "Met De La Enseñanza Del Inglés" }
       ]},
       { title: "Octavo Semestre", courses: [
-        "Literatura Inglesa Siglo XX",
+        { name: "Literatura Inglesa Siglo XX" },
         { name: "Inglés Avanzado III", prereq: ["Inglés Avanzado II"] },
-        "Historia Del Idioma Inglés",
-        "Lit Norteamericana Siglo XX",
-        "Seminario De Tesis En Inglés",
-        "Asignatura Optativa de Idiomas",
-        "Optativa de Otro Departamento"
+        { name: "Historia Del Idioma Inglés" },
+        { name: "Lit Norteamericana Siglo XX" },
+        { name: "Seminario De Tesis En Inglés" },
+        { name: "Asignatura Optativa de Idiomas" },
+        { name: "Optativa de Otro Departamento" }
       ]},
       { title: "Tesis de Grado", courses: [
-        "Tesis De Grado O Curso Equival"
+        { name: "Tesis De Grado O Curso Equival" }
       ]}
     ];
 
@@ -145,7 +177,6 @@
 
     function render() {
       grid.innerHTML = '';
-
       const allCompleted = new Set(completed);
 
       curriculum.forEach(semester => {
@@ -156,12 +187,13 @@
         container.appendChild(h3);
 
         semester.courses.forEach(course => {
-          const courseName = typeof course === 'string' ? course : course.name;
+          const courseName = course.name;
           const prereqs = course.prereq || [];
           const locked = prereqs.some(p => !allCompleted.has(p));
           const div = document.createElement('div');
           div.className = 'course';
           div.textContent = courseName;
+
           if (locked) {
             div.classList.add('locked');
             div.title = 'Requiere: ' + prereqs.filter(p => !allCompleted.has(p)).join(', ');
@@ -179,6 +211,7 @@
               div.classList.add('completed');
             }
           }
+
           container.appendChild(div);
         });
 
